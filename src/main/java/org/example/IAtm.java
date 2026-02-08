@@ -1,8 +1,15 @@
 package org.example;
 
+import java.math.BigDecimal;
+
 public interface IAtm {
-    String getBalance();
-    void increaseBalance();
-    void takeMoneyFromDeposit();
-    void transferMoney(BankAccount account1, BankAccount account2);
+
+    BigDecimal getBalance(User user, int pin);
+
+    void deposit(User user, int pin, BigDecimal amount);
+
+    void withdraw(User user, int pin, BigDecimal amount);
+
+    void transfer(User fromUser, int pin, BankAccount toAccount, BigDecimal amount);
 }
+

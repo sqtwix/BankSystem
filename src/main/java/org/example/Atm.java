@@ -1,4 +1,5 @@
 package org.example;
 
-public class Atm {
+public class Atm implements IAtm {
+    
 }

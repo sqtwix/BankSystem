@@ -67,7 +67,7 @@ public class Atm implements IAtm {
     public void transfer(User fromUser, int pin, BankAccount toAccount, BigDecimal amount) {
         checkPin(fromUser, pin);
 
-        if (amount == null || amount.compareTo(BigDecimal.ZERO) < 0) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Сумма перевода должна быть больше 0");
         }
 

@@ -9,12 +9,11 @@ public class BankAccount {
 
     private String depositName;
     private BigDecimal balance;
-    private User owner;
+    // private User owner;
     private String bankName;
 
     public BankAccount(String depositName,
                        BigDecimal balance,
-                       User owner,
                        String bankName) {
 
         if (balance == null || balance.compareTo(BigDecimal.ZERO) < 0) {
@@ -23,7 +22,6 @@ public class BankAccount {
 
         this.depositName = depositName;
         this.balance = balance;
-        this.owner = owner;
         this.bankName = bankName;
     }
 
@@ -33,10 +31,6 @@ public class BankAccount {
 
     public String getBankName() {
         return bankName;
-    }
-
-    public User getOwner() {
-        return owner;
     }
 
     public void deposit(BigDecimal amount) {

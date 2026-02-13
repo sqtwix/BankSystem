@@ -189,7 +189,6 @@ public class Main {
             }
         }
 
-
     public static void printActions() {
         System.out.println("Вы включили банкомат.Выберите действие:" +
                 "\n 1. Получить баланс" +

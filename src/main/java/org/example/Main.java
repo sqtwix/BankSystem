@@ -9,7 +9,7 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     static void main() {
-        try {
+
             Scanner sc = new Scanner(System.in);
             System.out.println("===РАБОТА БАНКА И БАНКОМАТА===");
 
@@ -38,114 +38,159 @@ public class Main {
             User user1 = new User(1,
                     "Белов",
                     "Иван",
-                    123456,
+                    1234,
                     bankAccount1);
 
             User user2 = new User(2,
                     "Комаров",
                     "Иосиф",
-                    123456,
+                    4321,
                     bankAccount2);
 
 
             User user3 = new User(3,
                     "Демидов",
                     "Матвей",
-                    123456,
+                    1234,
                     bankAccount3);
 
             User user4 = new User(4,
                     "Иванова",
                     "Елена",
-                    123456,
+                    4321,
                     bankAccount4);
 
             User user5 = new User(5,
-                    "Б",
+                    "Зайцева",
                     "Елена",
-                    123456,
-                    bankAccount4);
+                    1234,
+                    bankAccount5);
 
             // Список для хранения пользователей
             List<User> userList = new ArrayList<>();
+
+            userList.add(user1);
+            userList.add(user2);
+            userList.add(user3);
+            userList.add(user4);
+            userList.add(user5);
 
             // Инициализация объекта банкомат
             Atm atm = new Atm();
 
             // Бесконечный диалог
             while (true) {
-                printActions();
-                int choosenAction = sc.nextInt();
+                try {
 
-                if (choosenAction < 0 || choosenAction > 5) {
-                    System.out.println("Ошибка! Введите корректный номер действия");
-                    continue;
-                }
+                    printActions();
+                    int choosenAction = sc.nextInt();
 
-                System.out.println("Какой вы пользователь (выберите цифру)");
+                    if (choosenAction < 0 || choosenAction > 5) {
+                        System.out.println("Ошибка! Введите корректный номер действия");
+                        continue;
+                    }
 
-                for(int i = 0; i < userList.size(); i++) {
-                    System.out.println(i + ". " + userList.get(i).getSurname()
-                        + userList.get(i).getName());
-                }
+                    if (choosenAction == 5) {
+                        System.out.println("Выход из банкомата...");
+                        return;
+                    }
 
-                int choosenUser = sc.nextInt();
-                User currentUser = userList.get(choosenUser);
+                    System.out.println("Какой вы пользователь (выберите цифру)");
 
-                if (choosenUser < 0 || choosenUser > userList.size()) {
-                    System.out.println("Ошибка! Введите корректный индекс пользователя!");
-                    continue;
-                }
+                    for (int i = 0; i < userList.size(); i++) {
+                        System.out.println(i + ". " + userList.get(i).getSurname()
+                                + " " + userList.get(i).getName());
+                    }
 
-                System.out.print("Введите пин-код от вашего счёта: ");
-                int pin = sc.nextInt();
+                    int choosenUser = sc.nextInt();
 
-                switch (choosenAction) {
-                    case 1:
-                        BigDecimal balance = atm.getBalance(currentUser, pin);
-                        System.out.println("Ваш баланс:" + balance);
-                        break;
-                    case 2:
-                        System.out.println("===ПОПОЛНЕНИЕ БАЛАНСА===");
-                        System.out.print("Введите сумму пополнения:");
-                        BigDecimal amounте = BigDecimal.valueOf(sc.nextInt());
-                        atm.increaseDeposit(currentUser, pin, amounте);
-                        break;
-                    case 3:
-                        System.out.println("===СНЯТИЕ ДЕНЕГ===");
-                        System.out.print("Введите сумму :");
-                        BigDecimal withdraw_amounте = BigDecimal.valueOf(sc.nextInt());
-                        atm.withdraw(currentUser, pin, withdraw_amounте );
-                        break;
-                    case 4:
-                        System.out.println("===ПЕРЕВОД ДЕНЕГ===");
-                        System.out.print("Введите сумму:");
-                        BigDecimal transferAmount = BigDecimal.valueOf(sc.nextInt());
+                    if (choosenUser < 0 || choosenUser >= userList.size()) {
+                        System.out.println("Ошибка! Введите корректный индекс пользователя!");
+                        continue;
+                    }
 
-                        System.out.println("Какому пользователю вы хоитет перевести деньги (выберите цифру)");
+                    User currentUser = userList.get(choosenUser);
 
-                        for(int i = 0; i < userList.size(); i++) {
-                            System.out.println(i + ". " + userList.get(i).getSurname()
-                                    + userList.get(i).getName());
-                        }
+                    System.out.print("Введите пин-код от вашего счёта: ");
+                    int pin = sc.nextInt();
 
-                        int toUserIndex = sc.nextInt();
-                        User toUser = userList.get(toUserIndex);
+                    switch (choosenAction) {
+                        case 1:
+                            BigDecimal balance = atm.getBalance(currentUser, pin);
+                            System.out.println("ВАШ БАЛАНС:" + balance);
+                            printSuccessMsg();
+                            printLine();
+                            break;
 
-                        atm.transfer(currentUser, pin, toUser.getBankAccount(), transferAmount);
-                        break;
-                    case 5:
-                       break;
-                    default:
-                        System.out.println("Заглушка");
+                        case 2:
+                            System.out.println("===ПОПОЛНЕНИЕ БАЛАНСА===");
+
+                            System.out.println("ВАШ БАЛАНС:" + atm.getBalance(currentUser, pin));
+
+                            System.out.print("Введите сумму пополнения:");
+                            BigDecimal amount = new BigDecimal(sc.next());
+                            atm.increaseDeposit(currentUser, pin, amount);
+                            printSuccessMsg();
+                            printLine();
+                            break;
+
+                        case 3:
+                            System.out.println("===СНЯТИЕ ДЕНЕГ===");
+
+                            System.out.println("ВАШ БАЛАНС:" + atm.getBalance(currentUser, pin));
+
+                            System.out.print("Введите сумму :");
+                            BigDecimal withdraw_amounте = new BigDecimal(sc.next());
+                            atm.withdraw(currentUser, pin, withdraw_amounте);
+                            printSuccessMsg();
+                            printLine();
+                            break;
+
+                        case 4:
+                            System.out.println("===ПЕРЕВОД ДЕНЕГ===");
+
+                            System.out.println("ВАШ БАЛАНС:" + atm.getBalance(currentUser, pin));
+
+                            System.out.print("Введите сумму:");
+                            BigDecimal transferAmount = new BigDecimal(sc.next());
+
+                            System.out.println("Какому пользователю вы хоитет перевести деньги (выберите цифру)");
+
+                            for (int i = 0; i < userList.size(); i++) {
+                                System.out.println(i + ". " + userList.get(i).getSurname()
+                                        + " " + userList.get(i).getName());
+                            }
+
+                            int toUserIndex = sc.nextInt();
+
+                            if (toUserIndex < 0 || toUserIndex >= userList.size()) {
+                                System.out.println("Ошибка! Некорректный индекс получателя.");
+                                continue;
+                            }
+
+                            User toUser = userList.get(toUserIndex);
+
+                            if (toUser == currentUser) {
+                                System.out.println("Нельзя перевести деньги самому себе!");
+                                continue;
+                            }
+
+                            atm.transfer(currentUser, pin, toUser.getBankAccount(), transferAmount);
+                            printSuccessMsg();
+                            printLine();
+                            break;
+
+                        default:
+                            System.out.println("ОШИБКА! Вы ввели неверное действие!");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Ошибка: " + e.getMessage());
                 }
             }
-        }catch (Exception ex) {
-            System.out.println("Ошибка в функции main:" + ex);
         }
-    }
 
-    public static void printActions(){
+
+    public static void printActions() {
         System.out.println("Вы включили банкомат.Выберите действие:" +
                 "\n 1. Получить баланс" +
                 "\n 2. Пополнить счёт" +
@@ -153,5 +198,13 @@ public class Main {
                 "\n 4. Перевести деньги на другой счёт" +
                 "\n 5. ВЫЙТИ ИЗ ДИАЛОГА!" +
                 "\n Выберите действие (введите цифру):");
+    }
+
+    public static void printLine(){
+        System.out.println("-".repeat(40));
+    }
+
+    public static void printSuccessMsg(){
+        System.out.println("ДЕЙСТВИЕ УСПЕШНО ЗАВЕРШЕНО1");
     }
 }

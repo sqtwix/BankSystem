@@ -32,7 +32,7 @@ public class Atm implements IAtm {
         checkPin(user, pin);
 
         if ((amount == null || amount.compareTo(BigDecimal.ZERO) <= 0)) {
-            throw new IllegalArgumentException("Сумма пополнения должна быть 0");
+            throw new IllegalArgumentException("Сумма пополнения должна быть больше 0");
         }
 
         user.getBankAccount().deposit(amount);

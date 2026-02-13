@@ -130,6 +130,7 @@ public class Main {
                             System.out.print("Введите сумму пополнения:");
                             BigDecimal amount = new BigDecimal(sc.next());
                             atm.increaseDeposit(currentUser, pin, amount);
+                            System.out.println("ВАШ БАЛАНС:" + atm.getBalance(currentUser, pin));
                             printSuccessMsg();
                             printLine();
                             break;
@@ -142,6 +143,7 @@ public class Main {
                             System.out.print("Введите сумму :");
                             BigDecimal withdraw_amounте = new BigDecimal(sc.next());
                             atm.withdraw(currentUser, pin, withdraw_amounте);
+                            System.out.println("ВАШ БАЛАНС:" + atm.getBalance(currentUser, pin));
                             printSuccessMsg();
                             printLine();
                             break;
@@ -176,6 +178,7 @@ public class Main {
                             }
 
                             atm.transfer(currentUser, pin, toUser.getBankAccount(), transferAmount);
+                            System.out.println("ВАШ БАЛАНС:" + atm.getBalance(currentUser, pin));
                             printSuccessMsg();
                             printLine();
                             break;
